@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  web:
+    build: './app'
+    # Host port proxy to 80
+    ports:
+      - "3000:3000"
+    links:
+      - api
+
+  api:
+    build: './api'
+    # api host port defined the same as in the container
+    links:
+      - db
+    ports:
+      - "3001:3001"
+
+  db:
+    # This image exposes the standard MySQL port (3306)
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_USER: 'chat'
+      MYSQL_PASSWORD: 'chatApp121212'
+      MYSQL_DATABASE: 'chattingApp'
